@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Lost Item Board</title>
+	<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <header class="site-header">
+        <div class="header-inner">
+			<div class="header-left">
+				<a class="site-title" href="../index.html">Campus Lost and Found</a>
+			</div>
+
+            <nav class="main-menu" aria-label="Main menu">
+                <a href="../index.html">Home</a>
+                <a href="find_item_list.html">Found Item Board</a>
+                <a href="lost_item_list.html">Lost Item Board</a>
+            </nav>
+
+			<div class="header-actions">
+				<button type="button" class="header-btn header-search-trigger">Search</button>
+				<a class="header-btn" href="find_form.html">Found</a>
+				<a class="header-btn" href="lost_form.html">Lost</a>
+			</div>
+        </div>
+    </header>
+
+	<div id="header-search-popup" class="search-popup" hidden>
+		<div id="header-search-backdrop" class="search-popup-backdrop"></div>
+
+		<section class="search-popup-panel" role="dialog" aria-modal="true" aria-labelledby="header-search-title">
+			<button type="button" id="header-search-close" class="search-popup-close" aria-label="Close search popup">X</button>
+			<h2 id="header-search-title" class="search-popup-title">Quick Search</h2>
+
+			<form id="header-search-form" class="search-popup-form">
+				<div class="search-popup-field">
+					<label for="header-search-keyword">Keyword</label>
+					<input type="text" id="header-search-keyword" list="header-search-suggestions" placeholder="Item name, location, details...">
+					<datalist id="header-search-suggestions"></datalist>
+				</div>
+
+				<div class="search-popup-field">
+					<label for="header-search-category">Category</label>
+					<select id="header-search-category">
+						<option value="">All categories</option>
+						<option value="Electronics">Electronics</option>
+						<option value="Documents">Documents</option>
+						<option value="Stationery">Stationery</option>
+						<option value="Clothing">Clothing</option>
+						<option value="Accessories">Accessories</option>
+						<option value="Personal Item">Personal Item</option>
+						<option value="Other">Other</option>
+					</select>
+				</div>
+
+				<div class="search-popup-field">
+					<label for="header-search-board">Board</label>
+					<select id="header-search-board">
+						<option value="found">Found Item Board</option>
+						<option value="lost">Lost Item Board</option>
+					</select>
+				</div>
+
+				<div class="search-popup-actions">
+					<button type="button" id="header-search-cancel" class="btn-secondary">Cancel</button>
+					<button type="submit" class="btn-secondary">Search</button>
+				</div>
+			</form>
+		</section>
+	</div>
+
+	<main class="page-wrap">
+		<section class="panel">
+			<h1>Lost Item Board</h1>
+			<p class="lead">Browse lost-item posts and help return belongings to their owners.</p>
+
+			<div class="search-row">
+				<div class="filter-group">
+					<label for="search-input">Keyword</label>
+					<input type="text" id="search-input" placeholder="Name, details, location...">
+				</div>
+
+				<div class="filter-group">
+					<label for="category-filter">Category</label>
+					<select id="category-filter">
+						<option value="">All categories</option>
+						<option value="Electronics">Electronics</option>
+						<option value="Documents">Documents</option>
+						<option value="Stationery">Stationery</option>
+						<option value="Clothing">Clothing</option>
+						<option value="Accessories">Accessories</option>
+						<option value="Personal Item">Personal Item</option>
+						<option value="Other">Other</option>
+					</select>
+				</div>
+
+				<div class="filter-group">
+					<label for="location-filter">Location Filter</label>
+					<input type="text" id="location-filter" placeholder="Example: cafeteria">
+				</div>
+
+				<button type="button" id="search-button" class="btn-secondary">Search</button>
+				<button type="button" id="reset-button" class="btn-secondary">Reset</button>
+			</div>
+
+			<p class="small-note">Showing <span id="result-count">0 item(s)</span></p>
+			<section id="lost-list" class="item-grid"></section>
+		</section>
+	</main>
+
+	<script src="../backend/database.js"></script>
+	<script src="../backend/verify_holder.js"></script>
+	<script src="../backend/header_search.js"></script>
+	<script>
+		document.addEventListener("DOMContentLoaded", function () {
+			var searchInput = document.getElementById("search-input");
+			var categoryFilter = document.getElementById("category-filter");
+			var locationFilter = document.getElementById("location-filter");
+			var searchButton = document.getElementById("search-button");
+			var resetButton = document.getElementById("reset-button");
+			var urlParams = new URLSearchParams(window.location.search);
+
+			if (urlParams.get("q")) {
+				searchInput.value = urlParams.get("q");
+			}
+
+			if (urlParams.get("category")) {
+				categoryFilter.value = urlParams.get("category");
+			}
+
+			if (urlParams.get("location")) {
+				locationFilter.value = urlParams.get("location");
+			}
+
+			function renderList() {
+				window.LFVerify.renderItemList({
+					type: "lost",
+					containerId: "lost-list",
+					searchInputId: "search-input",
+					categoryFilterId: "category-filter",
+					locationFilterId: "location-filter",
+					resultCountId: "result-count",
+					emptyMessage: "No lost-item posts yet."
+				});
+			}
+
+			searchButton.addEventListener("click", renderList);
+			searchInput.addEventListener("input", renderList);
+			categoryFilter.addEventListener("change", renderList);
+			locationFilter.addEventListener("input", renderList);
+
+			resetButton.addEventListener("click", function () {
+				searchInput.value = "";
+				categoryFilter.value = "";
+				locationFilter.value = "";
+				renderList();
+			});
+
+			renderList();
+		});
+	</script>
+</body>
+</html>
