@@ -234,7 +234,7 @@ app.post("/api/items/:type", async function(req, res) {
         return;
     }
 
-    // generate id like L-1234567890-56789
+    // generate id like L-1234567890-56789 or F-1234567890-56789
     var prefix = type === "lost" ? "L" : "F";
     var itemId = prefix + "-" + Date.now() + "-" + Math.floor(Math.random() * 100000);
 
@@ -244,7 +244,7 @@ app.post("/api/items/:type", async function(req, res) {
     var createdAt = new Date().toISOString();
 
     var sql = "INSERT INTO items (id, type, item_name, category, location, date, description, question, answer, questions_json, photo_data_url, contact, created_at) " +
-        "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+              "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     db.run(sql, [itemId, type, itemName, category, location, date, description, firstQ, firstA, questionsJson, photoDataUrl, contact, createdAt], function(err) {
         if (err) {
