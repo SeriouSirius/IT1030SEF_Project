@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Report Lost Item</title>
+	<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+	<header class="site-header">
+		<div class="header-inner">
+			<div class="header-left">
+				<a class="site-title" href="../index.html">Campus Lost and Found</a>
+			</div>
+
+			<nav class="main-menu" aria-label="Main menu">
+				<a href="../index.html">Home</a>
+				<a href="find_item_list.html">Found Item Board</a>
+				<a href="lost_item_list.html">Lost Item Board</a>
+			</nav>
+
+			<div class="header-actions">
+				<button type="button" class="header-btn header-search-trigger">Search</button>
+				<a class="header-btn" href="find_form.html">Found</a>
+				<a class="header-btn" href="lost_form.html">Lost</a>
+			</div>
+		</div>
+	</header>
+
+	<div id="header-search-popup" class="search-popup" hidden>
+		<div id="header-search-backdrop" class="search-popup-backdrop"></div>
+
+		<section class="search-popup-panel" role="dialog" aria-modal="true" aria-labelledby="header-search-title">
+			<button type="button" id="header-search-close" class="search-popup-close" aria-label="Close search popup">X</button>
+			<h2 id="header-search-title" class="search-popup-title">Quick Search</h2>
+
+			<form id="header-search-form" class="search-popup-form">
+				<div class="search-popup-field">
+					<label for="header-search-keyword">Keyword</label>
+					<input type="text" id="header-search-keyword" list="header-search-suggestions" placeholder="Item name, location, details...">
+					<datalist id="header-search-suggestions"></datalist>
+				</div>
+
+				<div class="search-popup-field">
+					<label for="header-search-category">Category</label>
+					<select id="header-search-category">
+						<option value="">All categories</option>
+						<option value="Electronics">Electronics</option>
+						<option value="Documents">Documents</option>
+						<option value="Stationery">Stationery</option>
+						<option value="Clothing">Clothing</option>
+						<option value="Accessories">Accessories</option>
+						<option value="Personal Item">Personal Item</option>
+						<option value="Other">Other</option>
+					</select>
+				</div>
+
+				<div class="search-popup-field">
+					<label for="header-search-board">Board</label>
+					<select id="header-search-board">
+						<option value="found">Found Item Board</option>
+						<option value="lost">Lost Item Board</option>
+					</select>
+				</div>
+
+				<div class="search-popup-actions">
+					<button type="button" id="header-search-cancel" class="btn-secondary">Cancel</button>
+					<button type="submit" class="btn-secondary">Search</button>
+				</div>
+			</form>
+		</section>
+	</div>
+
+	<main class="page-wrap">
+		<section class="panel">
+			<h1>Report a Lost Item</h1>
+			<p class="lead">Fill this form if you lost an item on campus.</p>
+
+			<form id="lost-form" class="simple-form" novalidate>
+				<label for="item-name">Item Name *</label>
+				<input type="text" id="item-name" required placeholder="Example: Black umbrella">
+
+				<label for="category">Category *</label>
+				<select id="category" required>
+					<option value="">Select category</option>
+					<option value="Electronics">Electronics</option>
+					<option value="Documents">Documents</option>
+					<option value="Stationery">Stationery</option>
+					<option value="Clothing">Clothing</option>
+					<option value="Accessories">Accessories</option>
+					<option value="Personal Item">Personal Item</option>
+					<option value="Other">Other</option>
+				</select>
+
+				<label for="location">Last Seen Location *</label>
+				<input type="text" id="location" required placeholder="Example: Library Level 2">
+
+				<label for="date">Date Lost *</label>
+				<input type="date" id="date" required>
+
+				<label for="description">Description *</label>
+				<textarea id="description" rows="4" required placeholder="Add color, brand, size, or unique marks."></textarea>
+
+				<label for="photo">Item Photo</label>
+				<input type="file" id="photo" accept="image/*">
+				<p class="small-note">Optional, but helpful for faster matching.</p>
+
+				<div class="verification-builder">
+					<h3>Verification Questions *</h3>
+					<p class="small-note">Add at least 2 questions. Each question needs 4 options and one correct option.</p>
+					<div id="verification-questions" class="question-builder-list"></div>
+					<button type="button" id="add-question-button" class="btn-secondary">Add Another Question</button>
+				</div>
+
+				<label for="contact">Your Contact *</label>
+				<input type="text" id="contact" required placeholder="Email or phone number">
+
+				<button type="submit" class="btn-primary">Post Lost Item</button>
+			</form>
+
+			<p id="form-message" class="form-message" aria-live="polite"></p>
+		</section>
+	</main>
+
+	<script src="../backend/database.js"></script>
+	<script src="../backend/lost_form.js"></script>
+	<script src="../backend/header_search.js"></script>
+</body>
+</html>
