@@ -1,14 +1,106 @@
-<!-- the main page of the website, which is a simple html file with a header and a title. -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lost&Found website</title>
+    <title>Campus Lost and Found</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header>
-        <h1>Lost&Found website</h1>
+    <header class="site-header">
+        <div class="header-inner">
+            <div class="header-left">
+                <a class="site-title" href="index.html">Campus Lost and Found</a>
+            </div>
+
+            <nav class="main-menu" aria-label="Main menu">
+                <a href="index.html">Home</a>
+                <a href="frontend/find_item_list.html">Found Item Board</a>
+                <a href="frontend/lost_item_list.html">Lost Item Board</a>
+            </nav>
+
+            <div class="header-actions">
+                <button type="button" class="header-btn header-search-trigger">Search</button>
+                <a class="header-btn" href="frontend/find_form.html">Found</a>
+                <a class="header-btn" href="frontend/lost_form.html">Lost</a>
+            </div>
+        </div>
     </header>
+
+    <div id="header-search-popup" class="search-popup" hidden>
+        <div id="header-search-backdrop" class="search-popup-backdrop"></div>
+
+        <section class="search-popup-panel" role="dialog" aria-modal="true" aria-labelledby="header-search-title">
+            <button type="button" id="header-search-close" class="search-popup-close" aria-label="Close search popup">X</button>
+            <h2 id="header-search-title" class="search-popup-title">Quick Search</h2>
+
+            <form id="header-search-form" class="search-popup-form">
+                <div class="search-popup-field">
+                    <label for="header-search-keyword">Keyword</label>
+                    <input type="text" id="header-search-keyword" list="header-search-suggestions" placeholder="Item name, location, details...">
+                    <datalist id="header-search-suggestions"></datalist>
+                </div>
+
+                <div class="search-popup-field">
+                    <label for="header-search-category">Category</label>
+                    <select id="header-search-category">
+                        <option value="">All categories</option>
+                        <option value="Electronics">Electronics</option>
+                        <option value="Documents">Documents</option>
+                        <option value="Stationery">Stationery</option>
+                        <option value="Clothing">Clothing</option>
+                        <option value="Accessories">Accessories</option>
+                        <option value="Personal Item">Personal Item</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+
+                <div class="search-popup-field">
+                    <label for="header-search-board">Board</label>
+                    <select id="header-search-board">
+                        <option value="found">Found Item Board</option>
+                        <option value="lost">Lost Item Board</option>
+                    </select>
+                </div>
+
+                <div class="search-popup-actions">
+                    <button type="button" id="header-search-cancel" class="btn-secondary">Cancel</button>
+                    <button type="submit" class="btn-secondary">Search</button>
+                </div>
+            </form>
+        </section>
+    </div>
+
+    <main class="page-wrap">
+        <section class="panel hero">
+            <h1>Welcome to Campus Lost and Found</h1>
+            <p class="lead">Choose an action below to report an item or browse existing records.</p>
+
+            <div class="hero-actions">
+                <a class="action-card" href="frontend/find_form.html">
+                    <h3>I found a lost item</h3>
+                    <p class="small-note">Report something you found and help return it to the owner.</p>
+                </a>
+
+                <a class="action-card" href="frontend/lost_form.html">
+                    <h3>I lost something</h3>
+                    <p class="small-note">Submit details so others can help you find your item.</p>
+                </a>
+
+                <a class="action-card" href="frontend/find_item_list.html">
+                    <h3>Found items list</h3>
+                    <p class="small-note">Browse all reported found items on campus.</p>
+                </a>
+
+                <a class="action-card" href="frontend/lost_item_list.html">
+                    <h3>Lost items list</h3>
+                    <p class="small-note">Check reports from people who are missing items.</p>
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <script src="backend/database.js"></script>
+    <script src="backend/header_search.js"></script>
 </body>
 </html>
