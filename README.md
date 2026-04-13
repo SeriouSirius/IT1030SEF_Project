@@ -1,4 +1,4 @@
-# IT1030SEF Project
+# IT1030SEF Group 27 Project
 
 A campus Lost and Found web app where students can:
 
